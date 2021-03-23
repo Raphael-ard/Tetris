@@ -1,5 +1,7 @@
 package turing;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -13,8 +15,10 @@ import javax.swing.ImageIcon;
  */
 public class KongZhi {
 
-	public ShiKuai sk;
-	public LuoKuai lk;
+	private ShiKuai sk;
+	private LuoKuai lk;
+	private static int score = 0;
+	private final Font ft = new Font("华文新魏", Font.BOLD, 20);
 	
 	public KongZhi() {	}
 
@@ -29,10 +33,10 @@ public class KongZhi {
 	}
 
 	public void dingShi(){
+		score = sk.xiaoHang();
+		
 		if (lk.xiaDang(sk) || lk.xiaChu()) {
 			sk.heBing(lk);
-			
-			sk.xiaoHang();
 			
 			if (sk.siMa()) {
 				System.out.println("Game Over");
@@ -60,8 +64,14 @@ public class KongZhi {
 	 */
 	public void xianShi(Graphics g){
 		// 背景显示
-		Image  tu=(new ImageIcon("俄罗斯图片/背景.png")).getImage();	//路径：图片-右键-属性-路径src/	
+		Image  tu=(new ImageIcon("俄罗斯方块图片/背景.png")).getImage();	//路径：图片-右键-属性-路径src/	
 		g.drawImage(tu,0,0,null);	
+		
+		
+		
+		g.setFont(ft); //设置字体
+		g.setColor(Color.RED);
+        g.drawString(Integer.toString(score),400, 243); //设置文字
 		// 落块显示
 		lk.xianShi(g);
 		
@@ -92,6 +102,13 @@ public class KongZhi {
 		if (lk.zuoChu())   return;
 		
 		lk.zuoYi();
+	}
+
+	public void wanLai()
+	{
+		sk.tianMan19();
+		
+		sk.xiaoHang();
 	}
 
 }

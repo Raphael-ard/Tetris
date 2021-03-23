@@ -10,7 +10,8 @@ public class ChuangKou
 {
 	//TODO:变量“声明”在此
 
-	public KongZhi kz = new KongZhi();
+	private KongZhi kz = new KongZhi();
+	
 	
 	窗口	ck	= null;
 	定时器	ds1	= null;
@@ -23,7 +24,7 @@ public class ChuangKou
 		
 		ck = new 窗口();
 		//窗口 宽+2*立体边, 高+2*立体边+标题栏
-		ck.setBounds(100, 200, 5 * 2 + 600, 700 + 2 * 5 + 25);
+		ck.setBounds(100, 100, 5 * 2 + 600, 700 + 2 * 5 + 25);
 //		ck.setSize(5 * 2 + 600, 600 + 2 * 5 + 25);
 		//设定窗口可见性setVisible  true/false
 		ck.setVisible(true);
@@ -114,6 +115,9 @@ public class ChuangKou
 					break;
 				case KeyEvent.VK_DOWN://下
 					kz.xiaCZ();
+					break;
+				case KeyEvent.VK_W:
+					kz.wanLai();
 					break;
 				}
 				repaint();
@@ -208,7 +212,7 @@ public class ChuangKou
 			{
 				try
 				{
-					xc.sleep(jianGe);
+					xc.sleep(500);
 
 					if (this == ds1)
 					{

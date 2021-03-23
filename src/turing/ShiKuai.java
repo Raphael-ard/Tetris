@@ -1,6 +1,9 @@
 package turing;
 
 import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 
 
 /**
@@ -10,7 +13,8 @@ import java.awt.Graphics;
  */
 public class ShiKuai {
 
-	int[][] ges;
+	protected int[][] ges;
+	private int score = 0;
 
 	public void finalize() throws Throwable {
 
@@ -25,10 +29,22 @@ public class ShiKuai {
 	 * @param lk
 	 */
 	public void heBing(LuoKuai lk){
-
+		for (int h=0;h<=19;h++) {
+			for (int l=0;l<=9;l++) {
+				if (lk.ges[h][l] == 1) {
+					ges[h][l] = 1;
+					lk.ges[h][l] = 0;
+				}
+			}
+		}
 	}
 
 	public boolean siMa(){
+		for (int l=0;l<=9;l++) {
+			if (ges[0][l] == 1) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -37,11 +53,41 @@ public class ShiKuai {
 	 * @param g
 	 */
 	public void xianShi(Graphics g){
-
+		Image  tu=(new ImageIcon("¶íÂÞË¹·½¿éÍ¼Æ¬/Êµ¿é.png")).getImage();	//Â·¾¶£ºÍ¼Æ¬-ÓÒ¼ü-ÊôÐÔ-Â·¾¶src/	
+		for (int h=0;h<=19;h++) {
+			for (int l=0;l<=9;l++) {
+				if (ges[h][l] == 1) {
+					g.drawImage(tu,30+30*l,5+30*h,null);	
+				}
+			}
+		}
 	}
 
 	public int xiaoHang(){
-		return 0;
+		for (int h=19;h>=1;h--) {
+			//ÅÐ¶Ï  ÇóºÍ
+			int he = 0;
+			for (int l=0;l<=9;l++) {
+				he += ges[h][l];
+			}
+//			ÅÐ¶Ï  ÏûÐÐ
+			if (he == 10) {
+				score++;
+				for (int xh =h-1;xh>=0;xh--) {
+					for (int l=0;l<=9;l++) {
+						ges[xh+1][l] = ges[xh][l];
+						ges[xh][l] = 0;
+					}
+				}
+			}
+		}
+		return score;
 	}
 
+	public void tianMan19()
+	{
+		for (int l=0;l<=9;l++) {
+			ges[19][l] = 1;
+		}
+	}
 }
