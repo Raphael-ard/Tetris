@@ -15,11 +15,18 @@ public class LuoKuai {
 
 	protected int[][] ges;
 
+	private int zhuanHang;
+	private int zhuanLie;
+	
 	public void finalize() throws Throwable {
 
 	}
 
 	public LuoKuai(){
+		
+		zhuanHang = 0;
+		zhuanLie = 4;
+		
 		ges = new int[20][10];
 		
 		switch ( (int)(Math.random()*10)  ) {
@@ -102,6 +109,9 @@ public class LuoKuai {
 	}
 
 	public void xiaYi(){
+		
+		zhuanHang++;
+		
 		for (int h=18;h>=0;h--) {
 			for (int l=0;l<=9;l++) {
 				ges[h+1][l] = ges[h][l];
@@ -135,6 +145,9 @@ public class LuoKuai {
 	}
 
 	public void youYi(){
+		
+		zhuanLie++;
+		
 		for (int l=8;l>=0;l--) {
 			for (int h=0;h<=19;h++) {
 				ges[h][l+1] = ges[h][l];
@@ -144,10 +157,47 @@ public class LuoKuai {
 	}
 
 	public void zhuan(){
-
+		int[][] ge2s = new int[20][10];
+		
+		for (int h=0;h<=19;h++) {
+			for (int l=0;l<=9;l++) {
+				if (ges[h][l] == 1) {
+					int xinLie = zhuanLie+zhuanHang-h;
+					int xinHang = zhuanHang-zhuanLie+l;
+					
+					ge2s[xinHang][xinLie] = 1;
+				}
+			}
+		}
+		for (int h=0;h<=19;h++) {
+			for (int l=0;l<=9;l++) {
+				ges[h][l] = 0;
+			}
+		}
+		
+		for (int h=0;h<=19;h++) {
+			for (int l=0;l<=9;l++) {
+				if (ge2s[h][l] == 1) {
+					ges[h][l] = 1;
+				}
+			}
+		}
 	}
 
 	public boolean zhuanChu(){
+		for (int h=0;h<=19;h++) {
+			for (int l=0;l<=9;l++) {
+				if (ges[h][l] == 1) {
+					int xinLie = zhuanLie+zhuanHang-h;
+					int xinHang = zhuanHang-zhuanLie+l;
+					
+					if (xinLie<0 || xinLie>=10 || xinHang<0 || xinHang>=20 ) {
+						return true;
+					}
+				}
+			}
+		}
+		
 		return false;
 	}
 
@@ -156,6 +206,18 @@ public class LuoKuai {
 	 * @param sk
 	 */
 	public boolean zhuanDang(ShiKuai sk){
+		for (int h=0;h<=19;h++) {
+			for (int l=0;l<=9;l++) {
+				if (ges[h][l] == 1) {
+					int xinLie = zhuanLie+zhuanHang-h;
+					int xinHang = zhuanHang-zhuanLie+l;
+					
+					if (sk.ges[xinHang][xinLie] == 1) {
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 
@@ -184,6 +246,9 @@ public class LuoKuai {
 	}
 
 	public void zuoYi() {
+		
+		zhuanLie--;
+		
 		for (int l=1;l<=9;l++) {
 			for (int h=0;h<=19;h++) {
 				ges[h][l-1] = ges[h][l];

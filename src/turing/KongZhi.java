@@ -89,9 +89,9 @@ public class KongZhi {
 	}
 
 	public void zhuanCZ(){
-		if (lk.zhuanDang(sk))   return;
-		
 		if (lk.zhuanChu())   return;
+		
+		if (lk.zhuanDang(sk))   return;
 		
 		lk.zhuan();
 	}
